@@ -25,6 +25,8 @@ import DashboardOverview from "../layouts/DashboardOverview";
 import Payment from "../pages/Payment/Payment";
 import PaymentSuccess from "../pages/Payment/PaymentSuccess"
 import TransactionHistory from "../pages/Dashboard/User/TransactionHistory"
+import AdminRoute from "./AdminRoute";
+import VendorRoute from "./VendorRoute";
 
 
 
@@ -78,19 +80,82 @@ export const router = createBrowserRouter([
     // Payment Routes
       { path: "payment/:bookingId", element: <Payment /> },
       { path: "payment-success", element: <PaymentSuccess></PaymentSuccess> },
+ // Vendor Dashboard (Protected)
+      {
+        path: "vendor/profile",
+        element: (
+          <VendorRoute>
+            <VendorProfile />
+          </VendorRoute>
+        ),
+      },
+      {
+        path: "vendor/add-ticket",
+        element: (
+          <VendorRoute>
+            <AddTicket />
+          </VendorRoute>
+        ),
+      },
+      {
+        path: "vendor/my-added-tickets",
+        element: (
+          <VendorRoute>
+            <MyAddedTickets />
+          </VendorRoute>
+        ),
+      },
+      {
+        path: "vendor/requested-bookings",
+        element: (
+          <VendorRoute>
+            <RequestedBookings />
+          </VendorRoute>
+        ),
+      },
+      {
+        path: "vendor/revenue",
+        element: (
+          <VendorRoute>
+            <RevenueOverview />
+          </VendorRoute>
+        ),
+      },
 
-      // Vendor Dashboard
-      { path: "vendor/profile", element: <VendorProfile /> },
-      { path: "vendor/add-ticket", element: <AddTicket /> },
-      { path: "vendor/my-added-tickets", element: <MyAddedTickets /> },
-      { path: "vendor/requested-bookings", element: <RequestedBookings /> },
-      { path: "vendor/revenue", element: <RevenueOverview /> },
+      // Admin Dashboard (Protected)
+      {
+        path: "admin/profile",
+        element: (
+          <AdminRoute>
+            <AdminProfile />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/manage-tickets",
+        element: (
+          <AdminRoute>
+            <ManageTickets />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/manage-users",
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/advertise-tickets",
+        element: (
+          <AdminRoute>
+            <AdvertiseTickets />
+          </AdminRoute>
+        ),
+      },
 
-      // Admin Dashboard
-      { path: "admin/profile", element: <AdminProfile /> },
-      { path: "admin/manage-tickets", element: <ManageTickets /> },
-      { path: "admin/manage-users", element: <ManageUsers /> },
-      { path: "admin/advertise-tickets", element: <AdvertiseTickets /> },
     ],
   },
 ]);

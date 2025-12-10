@@ -4,23 +4,23 @@ export default function ProfileCard({ user }) {
       <div className="flex flex-col items-center text-center">
         
         <img
-          src={user?.photoURL || "/default-avatar.png"}
+          src={user?.photoURL || user?.photo || "/default-avatar.png"}
           alt="profile"
           className="w-32 h-32 rounded-full border-4 border-blue-500 object-cover"
         />
 
-        <h2 className="text-2xl font-bold mt-4">{user?.name}</h2>
+        <h2 className="text-2xl font-bold mt-4">
+          {user?.name || user?.displayName}
+        </h2>
         <p className="text-gray-500">{user?.email}</p>
 
         <span className="mt-3 inline-block bg-blue-600 text-white px-4 py-1 rounded-full text-sm">
-           Role: {user?.role || "user"}
-
+          Role: {user?.role || "user"}
         </span>
 
-        <p className="mt-4 text-gray-600 text-sm">
-          Account created: {user?.createdAt?.split("T")[0]}
-        </p>
+      
       </div>
     </div>
+
   );
 }

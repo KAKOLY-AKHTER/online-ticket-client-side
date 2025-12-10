@@ -1,11 +1,4 @@
-// import { useState } from "react";
-// import useAuth from "../../../hooks/useAuth";
-// import useRole from "../../../hooks/UseRole";
-// import { Link, NavLink } from "react-router-dom";
-// import { AiOutlineBars } from "react-icons/ai";
-// import { BsGraphUp } from "react-icons/bs";
-// import { FcSettings } from "react-icons/fc";
-// import { TbBrandStripe, TbTicket } from "react-icons/tb";
+
 import logo from '../../../assets/images/logo.png'
 import { GrLogout } from "react-icons/gr";
 import { MdOutlinePayment } from "react-icons/md";
@@ -23,7 +16,8 @@ import { TbBrandStripe, TbTicket } from "react-icons/tb";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
-  const [role, isRoleLoading] = useRole();
+ const { role, isRoleLoading } = useRole();
+
 console.log(role);
 console.log(isRoleLoading);
 

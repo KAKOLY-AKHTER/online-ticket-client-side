@@ -57,7 +57,7 @@ const Login = () => {
 
 
 
-      navigate(from, { replace: true });
+    
       toast.success("Login Successful");
     } catch (err) {
       console.log(err);
@@ -77,6 +77,7 @@ const Login = () => {
       
    const token = await loggedUser.user.getIdToken(true);
     localStorage.setItem("access-token", token);
+ localStorage.setItem("user-email", loggedUser.user.email);
 
       await axios.post("http://localhost:3000/user", {
         email: loggedUser.user.email,

@@ -9,6 +9,7 @@ const TransactionHistory = () => {
 
     const { data: txns = [] } = useQuery({
         queryKey: ["transactions", user.email],
+        enabled: !!user?.email,
         queryFn: async () => {
             const res = await axiosSecure.get(`/transactions?email=${user.email}`);
             return res.data;

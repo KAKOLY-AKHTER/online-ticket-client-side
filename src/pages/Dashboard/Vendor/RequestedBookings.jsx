@@ -1,6 +1,4 @@
-// import React, { useEffect, useState } from "react";
-// import useAuth from "../../../hooks/useAuth";
-// import { authFetch } from "../../../utils/api";
+
 
 import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
@@ -25,6 +23,8 @@ export default function RequestedBookings(){
       const token = await getToken();
       await authFetch(`${import.meta.env.VITE_API_URL}/vendor/bookings/${id}/status`, token, {
         method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+
         body: JSON.stringify({ status })
       });
       setRequests(prev => prev.map(r => r._id === id ? { ...r, status } : r));
@@ -45,7 +45,7 @@ export default function RequestedBookings(){
               <td>${r.totalPrice}</td>
               <td className="flex gap-2">
                 <button className="btn-primary" onClick={()=>changeStatus(r._id,'accepted')}>Accept</button>
-                <button className="btn-danger" onClick={()=>changeStatus(r._1d,'rejected')}>Reject</button>
+                <button className="btn-danger" onClick={()=>changeStatus(r._id,'rejected')}>Reject</button>
               </td>
             </tr>
           ))}

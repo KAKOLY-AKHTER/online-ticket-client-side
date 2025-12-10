@@ -1,9 +1,4 @@
-// import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-// import { useQuery } from "@tanstack/react-query";
-// import { useParams } from "react-router";
-// import useAxiosSecure from "../../../hooks/useAxiosSecure";
-// import useAuth from "../../../hooks/useAuth";
-// import { useState } from "react";
+
 
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import { useParams } from "react-router";

@@ -55,6 +55,15 @@ const resetPassword = (email) => {
     })
   }
 
+  
+  const getToken = async () => {
+  if (user) {
+    return await user.getIdToken();
+  }
+  return null;
+};
+
+
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async currentUser => {
@@ -67,7 +76,10 @@ const resetPassword = (email) => {
     }
   }, [])
 
+
+
   const authInfo = {
+      getToken, 
     user,
     setUser,
     loading,

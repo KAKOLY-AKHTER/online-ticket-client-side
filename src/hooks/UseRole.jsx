@@ -18,15 +18,8 @@ const useRole = () => {
     },
   })
 
-  const mappedRole =
-    role === "customer" ? "user" :
-    role === "seller" ? "vendor" :
-    role
+   return { role, isRoleLoading };
 
-
-
-  //   return { role, isRoleLoading }
-  return [mappedRole, isRoleLoading]
 
 }
 
