@@ -27,6 +27,7 @@ import PaymentSuccess from "../pages/Payment/PaymentSuccess"
 import TransactionHistory from "../pages/Dashboard/User/TransactionHistory"
 import AdminRoute from "./AdminRoute";
 import VendorRoute from "./VendorRoute";
+import UpdateTicket from "../pages/Dashboard/Vendor/Update/UpdateTickets";
 
 
 
@@ -105,6 +106,18 @@ export const router = createBrowserRouter([
           </VendorRoute>
         ),
       },
+      {
+        path: "/dashboard/vendor/update-ticket/:id",
+        element: (
+          <VendorRoute>
+          <UpdateTicket></UpdateTicket>
+          </VendorRoute>
+        ),
+      },
+
+
+     
+
       {
         path: "vendor/requested-bookings",
         element: (
