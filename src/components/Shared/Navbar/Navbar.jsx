@@ -52,11 +52,7 @@ const Navbar = () => {
               {user && (
                 <>
                   <Link to="/tickets" className="hover:text-yellow-300 font-semibold">All Tickets</Link>
-                 <Link to="/dashboard/user/my-booked-tickets" className="hover:text-gray-200">
-          My Bookings
-        </Link>
-
-
+              
                   <Link to="/dashboard" className="hover:text-yellow-300 font-semibold">Dashboard</Link>
                 </>
               )}
@@ -146,13 +142,6 @@ const Navbar = () => {
                   {user ? (
                     <>
                       <Link to="/tickets" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-700">All Tickets</Link>
-                      <Link
-                        to="/dashboard/user/my-booked-tickets"
-                        className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-700"
-                      >
-                        My Bookings
-                      </Link>
-
                       
                       <Link to="/dashboard" className="block px-4 py-2 hover:bg-blue-100 dark:hover:bg-gray-700">Dashboard</Link>
                      <Link

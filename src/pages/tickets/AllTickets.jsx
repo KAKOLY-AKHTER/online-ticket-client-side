@@ -1,6 +1,3 @@
-// import { useEffect, useMemo, useState } from "react";
-// import { Link } from "react-router-dom";
-// import LoadingSpinner from "../components/Shared/LoadingSpinner";
 
 import { useEffect, useMemo, useState } from "react";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
@@ -26,17 +23,26 @@ const AllTickets = () => {
     fetch("http://localhost:3000/tickets")
       .then((res) => res.json())
       .then((data) => {
-        setTickets(data || []);
+       if (Array.isArray(data)) {
+          setTickets(data);
+        } else {
+          console.warn("Invalid ticket data:", data);
+          setTickets([]);
+        }
         setLoading(false);
+
       })
       .catch((err) => {
         console.error("Error fetching tickets:", err);
+        setTickets([]);
+
         setLoading(false);
       });
   }, []);
 
   const filtered = useMemo(() => {
-    let arr = [...tickets];
+ let arr = Array.isArray(tickets) ? [...tickets] : [];
+
 
     if (searchFrom.trim()) {
       arr = arr.filter((t) =>
@@ -50,6 +56,8 @@ const AllTickets = () => {
       );
     }
 
+    console.log(transportFilter);
+    
     if (transportFilter !== "All") {
       arr = arr.filter((t) => t.transportType === transportFilter);
     }
@@ -95,7 +103,8 @@ const AllTickets = () => {
           <option value="All">All Transports</option>
           <option value="Bus">Bus</option>
           <option value="Train">Train</option>
-          <option value="Airplane">Airplane</option>
+          <option value="Plane">Plane</option>
+          <option value="Launch">Launch</option>
         </select>
 
         <select

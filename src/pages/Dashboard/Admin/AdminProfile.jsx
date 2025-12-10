@@ -1,9 +1,14 @@
-import React from 'react'
+import useAuth from "../../../hooks/useAuth";
+import ProfileCard from "../ProfileCard";
 
-const AdminProfile = () => {
+
+export default function AdminProfile() {
+  const { user } = useAuth();
+
   return (
-    <div>AdminProfile</div>
-  )
+    <div>
+      <h1 className="text-2xl font-bold mb-6">Admin Profile</h1>
+      <ProfileCard user={user} />
+    </div>
+  );
 }
-
-export default AdminProfile

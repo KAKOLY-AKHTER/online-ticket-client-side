@@ -1,4 +1,9 @@
+
+import AdvertisementTickets from "./Advertisement";
 import HeroBanner from "./HeroBanner";
+import LatestTickets from "./Latesttickets";
+
+
 import PopularRoute from "./PopularRoute";
 import WhyChooseUs from "./WhyChooseUs";
 
@@ -9,7 +14,9 @@ const Home = () => {
 
       {/* Hero Slider */}
       <HeroBanner />
-
+     
+      <AdvertisementTickets></AdvertisementTickets>
+     <LatestTickets></LatestTickets>
      <PopularRoute></PopularRoute>
     <WhyChooseUs></WhyChooseUs> 
 

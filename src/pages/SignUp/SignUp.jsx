@@ -3,6 +3,7 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth();
@@ -10,10 +11,34 @@ const SignUp = () => {
   const location = useLocation();
   const from = location.state || "/";
 
+    // form submit handler
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const image = form.image.files[0];
+
+
+    
+    // password validation
+    if (password.length < 6)
+      return toast.error("Password must contain at least 6 characters");
+    if (!/[A-Z]/.test(password))
+      return toast.error("Password must contain at least 1 uppercase letter");
+    if (!/[0-9]/.test(password))
+      return toast.error("Password must contain at least 1 number");
+    if (!/[!@#$%^&*]/.test(password))
+      return toast.error("Password must contain at least 1 special character");
+
+    try {
+
+      
   const img_API_URL = `https://api.imgbb.com/1/upload?key=${
     import.meta.env.VITE_IMGBB_KEY
   }`;
-
+  
   // Image upload function
   const uploadImageToImgBB = async (imageFile) => {
     const formData = new FormData();
@@ -28,26 +53,7 @@ const SignUp = () => {
     return data?.data?.display_url; // uploaded image URL
   };
 
-  // form submit handler
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
-    const image = form.image.files[0];
 
-    // password validation
-    if (password.length < 6)
-      return toast.error("Password must contain at least 6 characters");
-    if (!/[A-Z]/.test(password))
-      return toast.error("Password must contain at least 1 uppercase letter");
-    if (!/[0-9]/.test(password))
-      return toast.error("Password must contain at least 1 number");
-    if (!/[!@#$%^&*]/.test(password))
-      return toast.error("Password must contain at least 1 special character");
-
-    try {
       // 1. Upload Image (if exists)
       let imageURL = "";
       if (image) {
@@ -56,6 +62,9 @@ const SignUp = () => {
 
       // 2. Create User
       const result = await createUser(email, password);
+        // Get Firebase token
+      const token = await result.user.getIdToken(true);
+      localStorage.setItem("access-token", token);
 
       // 3. Update profile with dynamic image
       await updateUserProfile(
@@ -63,6 +72,19 @@ const SignUp = () => {
         imageURL || "https://i.ibb.co/ZVFsg37/default-avatar.png"
       );
 
+        await axios.post("http://localhost:3000/user", { email, name, photo: imageURL });
+
+      // Fetch role
+      const roleRes = await axios.get("http://localhost:3000/user/role", {
+        headers: { authorization: `Bearer ${token}` },
+      });
+
+      const role = roleRes.data.role;
+      if (role === "admin") navigate("/dashboard/admin/profile");
+      else if (role === "vendor") navigate("/dashboard/vendor/profile");
+      else navigate("/dashboard/user/profile");
+
+
       toast.success("Signup Successful");
       navigate(from, { replace: true });
     } catch (err) {
@@ -71,16 +93,51 @@ const SignUp = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  // const handleGoogleSignIn = async () => {
+  //   try {
+  //     await signInWithGoogle();
+  //     navigate(from, { replace: true });
+  //     toast.success("Signup Successful");
+  //   } catch (err) {
+  //     console.log(err);
+  //     toast.error(err?.message);
+  //   }
+  // };
+
+    const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
-      navigate(from, { replace: true });
+     
+      const loggedUser = await signInWithGoogle();
+      const token = await loggedUser.user.getIdToken(true);
+      localStorage.setItem("access-token", token);
+
+      // Save user to backend
+      await axios.post("http://localhost:3000/user", {
+        email: loggedUser.user.email,
+        name: loggedUser.user.displayName,
+        photo: loggedUser.user.photoURL,
+      });
+
+      // Fetch role
+      const roleRes = await axios.get("http://localhost:3000/user/role", {
+        headers: { authorization: `Bearer ${token}` },
+      });
+
+      const role = roleRes.data.role;
+      if (role === "admin") navigate("/dashboard/admin/profile");
+      else if (role === "vendor") navigate("/dashboard/vendor/profile");
+      else navigate("/dashboard/user/profile");
+
       toast.success("Signup Successful");
     } catch (err) {
-      console.log(err);
-      toast.error(err?.message);
+      console.error(err);
+      toast.error(err?.message || "Google Signup Failed");
+    
     }
   };
+
+
+  
 
   return (
     <div className="flex justify-center items-center p-6 min-h-screen bg-white">

@@ -10,7 +10,6 @@ import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import UserProfile from "../pages/Dashboard/User/UserProfile";
 import MyBookedTickets from "../pages/Dashboard/User/MyBookedTickets";
-import TransactionHistory from "../pages/Dashboard/User/TransactionHistory";
 import VendorProfile from "../pages/Dashboard/Vendor/VendorProfile";
 import AddTicket from "../pages/Dashboard/Vendor/AddTicket";
 import MyAddedTickets from "../pages/Dashboard/Vendor/MyAddedTickets";
@@ -18,10 +17,14 @@ import RequestedBookings from "../pages/Dashboard/Vendor/RequestedBookings";
 import RevenueOverview from "../pages/Dashboard/Vendor/RevenueOverview";
 import AdminProfile from "../pages/Dashboard/Admin/AdminProfile";
 import ManageTickets from "../pages/Dashboard/Admin/ManageTickets";
-import AdvertiseTickets from "../pages/Dashboard/Admin/AdvertiseTickets";
+import AdvertiseTickets from "../pages/Home/Advertisement";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import Contact from "../pages/static/Contact";
 import About from "../pages/static/About";
+import DashboardOverview from "../layouts/DashboardOverview";
+import Payment from "../pages/Payment/Payment";
+import PaymentSuccess from "../pages/Payment/PaymentSuccess"
+import TransactionHistory from "../pages/Dashboard/User/TransactionHistory"
 
 
 
@@ -30,18 +33,31 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-    errorElement:<ErrorPage></ErrorPage>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
-      { path: "/", element:<Home></Home> },
-      { path: "/tickets", element: <AllTickets></AllTickets> },
-      { path: "/tickets/:id", element: <TicketDetails></TicketDetails> },
+      { path: "/", element: <Home></Home> },
+      {
+        path: "/tickets", element: <PrivateRoute>
+          <AllTickets></AllTickets>
+        </PrivateRoute>
+      },
+      {
+        path: "/tickets/:id", element: <PrivateRoute>
+          <TicketDetails></TicketDetails>
+        </PrivateRoute>
+      },
+
+
+
+      { path: "/login", element: <Login></Login> },
+      { path: "/signup", element: <SignUp></SignUp> },
+
+      { path: "/contact", element: <Contact></Contact> },
+      { path: "/about", element: <About></About> },
+
+
     ],
   },
-  { path: "/login", element: <Login></Login> },
-  { path: "/signup", element: <SignUp></SignUp>},
-
-  { path: "/contact", element: <Contact></Contact> },
-  { path: "/about", element:<About></About>},
 
   {
     path: "/dashboard",
@@ -51,10 +67,17 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      { index: true, element: <DashboardOverview /> },
       // User Dashboard
-      { path: "user/profile", element: <UserProfile/> },
+      { path: "user/profile", element: <UserProfile /> },
+      {path: "user/transactions",element: <TransactionHistory/>  },
+
       { path: "user/my-booked-tickets", element: <MyBookedTickets /> },
-      { path: "user/transactions", element: <TransactionHistory /> },
+ 
+
+    // Payment Routes
+      { path: "payment/:bookingId", element: <Payment /> },
+      { path: "payment-success", element: <PaymentSuccess></PaymentSuccess> },
 
       // Vendor Dashboard
       { path: "vendor/profile", element: <VendorProfile /> },

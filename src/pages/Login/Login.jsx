@@ -4,6 +4,7 @@ import toast from "react-hot-toast"
 import { TbFidgetSpinner } from "react-icons/tb"
 import { FcGoogle } from "react-icons/fc"
 import useAuth from "../../hooks/useAuth"
+import axios from "axios"
 
 
 const Login = () => {
@@ -16,6 +17,8 @@ const Login = () => {
   if (loading) return <LoadingSpinner />
   if (user) return <Navigate to={from} replace={true} />
 
+
+  
   // form submit handler
   const handleSubmit = async event => {
     event.preventDefault();
@@ -24,10 +27,9 @@ const Login = () => {
     const password = form.password.value;
 
     try {
-      // User Login
-      setLoading(true);
+      
       const loggedUser = await signIn(email, password);
-      setLoading(false);
+   
 
       // ✅ Always get fresh token
       const token = await loggedUser.user.getIdToken(true);
@@ -35,6 +37,25 @@ const Login = () => {
       // ✅ Save in localStorage
       localStorage.setItem("access-token", token);
       localStorage.setItem("user-email", loggedUser.user.email);
+
+       await axios.post("http://localhost:3000/user", {
+        email: loggedUser.user.email,
+        name: loggedUser.user.displayName || loggedUser.user.email,
+        photo: loggedUser.user.photoURL || "https://i.ibb.co/ZVFsg37/default-avatar.png",
+      });
+
+
+       const roleRes = await axios.get("http://localhost:3000/user/role", {
+        headers: { authorization: `Bearer ${token}` },
+      });
+
+      const role = roleRes.data.role;
+
+      if (role === "admin") navigate("/dashboard/admin/profile");
+      else if (role === "vendor") navigate("/dashboard/vendor/profile");
+      else navigate("/dashboard/user/profile");
+
+
 
       navigate(from, { replace: true });
       toast.success("Login Successful");
@@ -44,30 +65,50 @@ const Login = () => {
     }
   };
 
+
+  
   // Handle Google Signin
   const handleGoogleSignIn = async () => {
 
     try {
-      setLoading(true);
+     
 
       const loggedUser = await signInWithGoogle();
-      setLoading(false);
+      
+   const token = await loggedUser.user.getIdToken(true);
+    localStorage.setItem("access-token", token);
 
+      await axios.post("http://localhost:3000/user", {
+        email: loggedUser.user.email,
+        name: loggedUser.user.displayName,
+        photo: loggedUser.user.photoURL,
+      });
 
-      const token = await loggedUser.user.getIdToken(true);
-      localStorage.setItem("access-token", token);
+      
 
-      localStorage.setItem("user-email", loggedUser.user.email);
+      // const token = await loggedUser.user.getIdToken(true);
+      // localStorage.setItem("access-token", token);
+      // localStorage.setItem("user-email", loggedUser.user.email);
 
-      navigate(from, { replace: true });
-      toast.success("Login Successful");
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
-      toast.error(err?.message);
-    }
+     // Fetch role
+    const roleRes = await axios.get("http://localhost:3000/user/role", {
+      headers: { authorization: `Bearer ${token}` },
+    });
+    const role = roleRes.data.role;
 
+    if (role === "admin") navigate("/dashboard/admin/profile");
+    else if (role === "vendor") navigate("/dashboard/vendor/profile");
+    else navigate("/dashboard/user/profile");
+
+    toast.success("Login Successful");
+  } catch (err) {
+    console.log(err);
+
+    toast.error(err?.message);
   }
+};
+
+
   return (
     <div className='flex justify-center items-center min-h-screen bg-white'>
       <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
