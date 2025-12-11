@@ -12,46 +12,48 @@ const MyBookedTickets = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    
-
-  if (user?.email) {
-    const token = localStorage.getItem("access-token");
-     axios.get("http://localhost:3000/bookings", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-    .then((res) => {
-      setTickets(res.data || []);
-    })
-    .catch((err) => {
-      console.error("Error fetching bookings:", err);
-      setTickets([]);
-    });
-
-  }
-}, [user]);
 
 
-  const getCountdown = (date,time) => {
+    if (user?.email) {
+      const token = localStorage.getItem("access-token");
+      axios.get("http://localhost:3000/bookings", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          setTickets(res.data || []);
+        })
+        .catch((err) => {
+          console.error("Error fetching bookings:", err);
+          setTickets([]);
+        });
+
+    }
+  }, [user]);
+
+
+  const getCountdown = (date, time) => {
     const now = new Date().getTime();
-   const event = new Date(`${date}T${time}:00`).getTime();
+    const event = new Date(`${date}T${time}:00`).getTime();
 
     const diff = event - now;
     if (diff <= 0) return "Expired";
 
     const h = Math.floor(diff / (1000 * 60 * 60));
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+
     const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    return `${h}h ${m}m`;
+    return `${d}d ${h}h ${m}m`;
   };
 
   return (
 
-    
+
     <div className="p-6 grid md:grid-cols-3 gap-6">
-    {Array.isArray(tickets) && tickets.map((item) => {
-          const countdown = getCountdown(item.departureDate, item.departureTime);
-          console.log("Countdown input:", item.departureDate, item.departureTime);
+      {Array.isArray(tickets) && tickets.map((item) => {
+        const countdown = getCountdown(item.departureDate, item.departureTime);
+        console.log("Countdown input:", item.departureDate, item.departureTime);
 
 
         const expired = countdown === "Expired";
@@ -80,21 +82,20 @@ const MyBookedTickets = () => {
               Total: ${item.totalPrice}
             </p>
 
-             <p className="mt-1">Departure: {item.departureDate} {item.departureTime}</p>
+            <p className="mt-1">Departure: {item.departureDate} {item.departureTime}</p>
 
 
             {/* STATUS */}
             <span
               className={`inline-block px-4 py-1 rounded mt-2 text-white
-              ${
-                item.status === "pending"
+              ${item.status === "Pending"
                   ? "bg-orange-500"
                   : item.status === "accepted"
-                  ? "bg-blue-500"
-                  : item.status === "paid"
-                  ? "bg-green-600"
-                  : "bg-red-600"
-              }`}
+                    ? "bg-blue-500"
+                    : item.status === "paid"
+                      ? "bg-green-600"
+                      : "bg-red-600"
+                }`}
             >
               {item.status}
             </span>
@@ -108,12 +109,11 @@ const MyBookedTickets = () => {
 
             {/* PAY BUTTON */}
             {item.status === "accepted" && !expired && (
-              <Link
-                to={`/payment/${item._id}`}
-                className="btn btn-primary w-full mt-3"
-              >
+              <Link to={`/dashboard/payment/${item._id}`} className="btn btn-primary w-full mt-3">
                 Pay Now
               </Link>
+
+
             )}
 
             {item.status === "accepted" && expired && (

@@ -1,6 +1,6 @@
 
 
-import { useElements, useStripe } from "@stripe/react-stripe-js";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useParams } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
@@ -78,16 +78,31 @@ const Payment = () => {
                 Pay ${price * quantity} for {title}
             </h2>
 
-            <form onSubmit={handlePayment}>
-                <CardElement className="border p-3" />
+         <form onSubmit={handlePayment}>
+        {/* Stripe Card Input */}
+        <CardElement
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#424770",
+                "::placeholder": { color: "#aab7c4" },
+              },
+              invalid: { color: "#9e2146" },
+            },
+          }}
+          className="border p-3 rounded"
+        />
 
-                <button
-                    disabled={!stripe || loading}
-                    className="btn btn-primary mt-5"
-                >
-                    {loading ? "Processing..." : "Pay Now"}
-                </button>
-            </form>
+        {/* Pay Button */}
+        <button
+          disabled={!stripe || loading}
+          className="btn btn-primary mt-5 w-full"
+        >
+          {loading ? "Processing..." : "Pay Now"}
+        </button>
+      </form>
+
         </div>
     );
 };

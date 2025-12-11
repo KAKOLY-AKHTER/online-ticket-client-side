@@ -28,7 +28,10 @@ import TransactionHistory from "../pages/Dashboard/User/TransactionHistory"
 import AdminRoute from "./AdminRoute";
 import VendorRoute from "./VendorRoute";
 import UpdateTicket from "../pages/Dashboard/Vendor/Update/UpdateTickets";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 
 
@@ -40,14 +43,18 @@ export const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home></Home> },
       {
-        path: "/tickets", element: <PrivateRoute>
+        path: "/tickets", element:
+        ( <PrivateRoute>
           <AllTickets></AllTickets>
         </PrivateRoute>
+        )
       },
       {
-        path: "/tickets/:id", element: <PrivateRoute>
+        path: "/tickets/:id", element: (
+        <PrivateRoute>
           <TicketDetails></TicketDetails>
         </PrivateRoute>
+        )
       },
 
 
@@ -79,7 +86,15 @@ export const router = createBrowserRouter([
  
 
     // Payment Routes
-      { path: "payment/:bookingId", element: <Payment /> },
+    {
+        path: "payment/:bookingId",
+        element: (
+          <Elements stripe={stripePromise}>
+            <Payment />
+          </Elements>
+        ),
+      },
+
       { path: "payment-success", element: <PaymentSuccess></PaymentSuccess> },
  // Vendor Dashboard (Protected)
       {
