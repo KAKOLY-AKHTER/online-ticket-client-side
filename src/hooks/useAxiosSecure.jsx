@@ -4,10 +4,7 @@ import useAuth from "./useAuth"
 import { useNavigate } from "react-router"
 import { useEffect } from "react"
 
-// import { useNavigate } from "react-router"
-// import useAuth from "./useAuth"
-// import { useEffect } from "react"
-// import axios from "axios"
+
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
