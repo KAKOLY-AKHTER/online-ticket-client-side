@@ -122,7 +122,7 @@ const AllTickets = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {pageData.map((t) => (
           <div key={t._id} className="bg-white rounded shadow p-4">
-            <img src={t.image} alt={t.title} className="w-full h-40 object-cover rounded" />
+            <img src={t.image} alt={t.title} className="w-full bg-cover h-40 object-cover rounded" />
             <h3 className="text-lg font-semibold mt-3">{t.title}</h3>
             <p className="text-sm text-gray-600">{t.from} → {t.to}</p>
             <p className="text-sm">Transport: {t.transportType}</p>
@@ -141,7 +141,7 @@ const AllTickets = () => {
               Departure: {t.departureDate} {t.departureTime}
             </p>
 
-            <Link to={`/tickets/${t._id}`} className="inline-block mt-4 bg-indigo-600 text-white px-4 py-2 rounded">
+            <Link to={`/tickets/${t._id}`} className="inline-block w-full text-center mt-4 bg-indigo-600 text-white px-4 py-2 rounded">
               See Details
             </Link>
           </div>

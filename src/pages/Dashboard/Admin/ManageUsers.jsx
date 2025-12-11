@@ -31,7 +31,7 @@ export default function ManageUsers() {
 
   return (
     <div>
-      <h2 className="text-2xl mb-4">Manage Users</h2>
+      <h2 className="text-2xl mb-4 text-sky-500 font-bold">Manage Users</h2>
      <table className="w-full text-sm text-left text-gray-700 border border-gray-200 rounded-lg overflow-hidden shadow-md">
   <thead className="bg-blue-100 text-blue-800 font-semibold">
     <tr>

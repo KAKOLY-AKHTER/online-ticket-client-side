@@ -29,7 +29,7 @@ useEffect(() => {
       <div className="grid md:grid-cols-3 gap-6">
         {tickets.map(t => (
           <div key={t._id} className="bg-white dark:bg-gray-900 shadow rounded-xl p-4 hover:shadow-lg transition">
-            <img src={t.image} className="rounded-lg h-40 w-full object-cover" />
+            <img src={t.image} className="rounded-lg bg-cover h-40 w-full object-cover" />
             <h3 className="mt-3 text-xl font-semibold">{t.title}</h3>
             <p className="text-gray-600">{t.transportType}</p>
             <p className="mt-1">Price: ${t.price}</p>
