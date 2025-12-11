@@ -1,7 +1,7 @@
 
 
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
@@ -14,6 +14,8 @@ const Payment = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     const [loading, setLoading] = useState(false);
+const navigate = useNavigate();
+
 
     // Load Booking Data
     const { data: booking } = useQuery({
@@ -68,7 +70,8 @@ const Payment = () => {
             });
 
             alert("Payment Success!");
-            window.location.href = "/dashboard/transaction-history";
+          navigate("/dashboard/user/transactions");
+
         }
     };
 

@@ -17,31 +17,56 @@ const TransactionHistory = () => {
     });
 
     return (
-        <div>
-            <h2 className="text-3xl mb-5">Transaction History</h2>
+        <div className="max-w-5xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-6">
+      <h2 className="text-3xl font-bold mb-6 text-sky-500 border-b pb-3 ">
+        Transaction History
+      </h2>
 
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>Transaction ID</th>
-                        <th>Ticket Title</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-100 text-left text-gray-700">
+              <th className="px-4 py-2 border">Transaction ID</th>
+              <th className="px-4 py-2 border">Ticket Title</th>
+              <th className="px-4 py-2 border">Amount</th>
+              <th className="px-4 py-2 border">Date</th>
+            </tr>
+          </thead>
 
-                <tbody>
-                    {txns.map(t => (
-                        <tr key={t._id}>
-                            <td>{t.transactionId}</td>
-                            <td>{t.title}</td>
-                            <td>${t.amount}</td>
-                            <td>{new Date(t.date).toLocaleString()}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+          <tbody>
+            {txns.length === 0 ? (
+              <tr>
+                <td
+                  colSpan="4"
+                  className="text-center py-6 text-gray-500 italic"
+                >
+                  No transactions found
+                </td>
+              </tr>
+            ) : (
+              txns.map((t) => (
+                <tr
+                  key={t._id}
+                  className="hover:bg-gray-50 transition-colors"
+                >
+                  <td className="px-4 py-2 border font-mono text-sm text-blue-600">
+                    {t.transactionId}
+                  </td>
+                  <td className="px-4 py-2 border">{t.title}</td>
+                  <td className="px-4 py-2 border font-semibold text-green-600">
+                    ${t.amount}
+                  </td>
+                  <td className="px-4 py-2 border text-gray-600">
+                    {new Date(t.date).toLocaleString()}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     );
 }
 
