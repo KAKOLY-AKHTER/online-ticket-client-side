@@ -88,7 +88,7 @@ const MyBookedTickets = () => {
             {/* STATUS */}
             <span
               className={`inline-block px-4 py-1 rounded mt-2 text-white
-              ${item.status === "Pending"
+              ${item.status === "pending"
                   ? "bg-pink-500"
                   : item.status === "accepted"
                     ? "bg-blue-500"
@@ -102,7 +102,7 @@ const MyBookedTickets = () => {
 
             {/* COUNTDOWN */}
             {item.status !== "rejected" && (
-              <p className="mt-2 text-red-600 font-semibold">
+              <p className="mt-2 text-orange-500 font-semibold">
                 Countdown: {countdown}
               </p>
             )}
