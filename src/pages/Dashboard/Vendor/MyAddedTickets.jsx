@@ -46,7 +46,7 @@ const navigate = useNavigate();
               key={t._id}
               className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
             >
-              <img src={t.image} alt={t.title} className="h-40 w-full object-cover" />
+              <img src={t.image} alt={t.title} className="h-40 w-full bg-cover object-cover" />
               <div className="p-4">
                 <h3 className="text-xl font-bold text-gray-800">{t.title}</h3>
                 <p className="text-sm text-gray-600">Price: ${t.price}</p>

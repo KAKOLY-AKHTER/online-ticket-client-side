@@ -89,7 +89,7 @@ const MyBookedTickets = () => {
             <span
               className={`inline-block px-4 py-1 rounded mt-2 text-white
               ${item.status === "Pending"
-                  ? "bg-orange-500"
+                  ? "bg-pink-500"
                   : item.status === "accepted"
                     ? "bg-blue-500"
                     : item.status === "paid"
