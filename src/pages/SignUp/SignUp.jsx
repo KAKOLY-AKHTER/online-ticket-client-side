@@ -4,14 +4,16 @@ import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state || "/";
-
-    // form submit handler
+  const [showPassword, setShowPassword] = useState(false);
+  // form submit handler
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -21,7 +23,7 @@ const SignUp = () => {
     const image = form.image.files[0];
 
 
-    
+
     // password validation
     if (password.length < 6)
       return toast.error("Password must contain at least 6 characters");
@@ -34,24 +36,23 @@ const SignUp = () => {
 
     try {
 
-      
-  const img_API_URL = `https://api.imgbb.com/1/upload?key=${
-    import.meta.env.VITE_IMGBB_KEY
-  }`;
-  
-  // Image upload function
-  const uploadImageToImgBB = async (imageFile) => {
-    const formData = new FormData();
-    formData.append("image", imageFile);
 
-    const res = await fetch(img_API_URL, {
-      method: "POST",
-      body: formData,
-    });
+      const img_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY
+        }`;
 
-    const data = await res.json();
-    return data?.data?.display_url; // uploaded image URL
-  };
+      // Image upload function
+      const uploadImageToImgBB = async (imageFile) => {
+        const formData = new FormData();
+        formData.append("image", imageFile);
+
+        const res = await fetch(img_API_URL, {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await res.json();
+        return data?.data?.display_url; // uploaded image URL
+      };
 
 
       // 1. Upload Image (if exists)
@@ -62,7 +63,7 @@ const SignUp = () => {
 
       // 2. Create User
       const result = await createUser(email, password);
-        // Get Firebase token
+      // Get Firebase token
       const token = await result.user.getIdToken(true);
       localStorage.setItem("access-token", token);
 
@@ -72,7 +73,7 @@ const SignUp = () => {
         imageURL || "https://i.ibb.co/ZVFsg37/default-avatar.png"
       );
 
-        await axios.post("http://localhost:3000/user", { email, name, photo: imageURL });
+      await axios.post("http://localhost:3000/user", { email, name, photo: imageURL });
 
       // Fetch role
       const roleRes = await axios.get("http://localhost:3000/user/role", {
@@ -104,9 +105,9 @@ const SignUp = () => {
   //   }
   // };
 
-    const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async () => {
     try {
-     
+
       const loggedUser = await signInWithGoogle();
       const token = await loggedUser.user.getIdToken(true);
       localStorage.setItem("access-token", token);
@@ -132,12 +133,12 @@ const SignUp = () => {
     } catch (err) {
       console.error(err);
       toast.error(err?.message || "Google Signup Failed");
-    
+
     }
   };
 
 
-  
+
 
   return (
     <div className="flex justify-center items-center p-6 min-h-screen bg-white">
@@ -188,16 +189,22 @@ const SignUp = () => {
                 className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-200"
               />
             </div>
-
-            <div>
-              <label className="text-sm mb-2">Password</label>
+            <div className='relative'>
               <input
-                type="password"
-                name="password"
+                type={showPassword ? "text" : "password"}
+                name='password'
+                autoComplete='current-password'
+                id='password'
                 required
-                placeholder="*******"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-200"
+                placeholder='*******'
+                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900'
               />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className='absolute right-3 top-2 cursor-pointer text-gray-600'
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </div>
           </div>
 

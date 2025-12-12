@@ -11,7 +11,13 @@ export default function ManageTickets() {
     const token = await getToken();
     const data = await authFetch(`${import.meta.env.VITE_API_URL}/admin/tickets`, token);
     // setTickets(data);
-    setTickets(data.filter(t => t.approved === false));
+    // setTickets(data.filter(t => t.status === "pending"));
+    setTickets(data.filter(t => t.status === "approved"));
+    // setTickets(data.filter(t => t.status?.toLowerCase() === "pending"));
+
+
+
+    console.log(data);
 
 
   };
@@ -29,6 +35,8 @@ export default function ManageTickets() {
         body: JSON.stringify({ approve }),
       });
       console.log("Response:", res);
+
+      alert(res.message || "Updated!");
       load();
     } catch (err) {
       console.error("Approve error:", err);
@@ -59,31 +67,41 @@ export default function ManageTickets() {
               <td className="px-4 py-2">${t.price}</td>
               <td className="px-4 py-2">{t.quantity}</td>
               <td className="px-4 py-2">
-                <span className={`px-2 py-1 rounded-full text-xs font-semibold ${t.approved ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                  {t.approved ? 'Approved' : 'Pending'}
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1 ${t.status === "approved"
+                      ? "bg-green-100 text-green-700"
+                      : t.status === "rejected"
+                        ? "bg-red-100 text-red-700"
+                        : "bg-yellow-100 text-yellow-700"
+                    }`}
+                >
+                  {t.status === "approved" && "✔ Approved"}
+                  {t.status === "rejected" && "✘ Rejected"}
+                  {t.status === "pending" && "Pending"}
                 </span>
+
               </td>
               <td className="px-4 py-2 flex gap-2 justify-center">
                 <button
-                  className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
+                  className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
                   onClick={() => setApprove(t._id, true)}
-                  disabled={t.approved}
                 >
-                  Approve
+                  ✔ Approve
                 </button>
                 <button
                   className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
                   onClick={() => setApprove(t._id, false)}
                 >
-                  Reject
+                  ✘ Reject
                 </button>
               </td>
+
+
             </tr>
           ))}
         </tbody>
       </table>
-
-
     </div>
+
   );
 }

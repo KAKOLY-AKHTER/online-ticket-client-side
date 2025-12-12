@@ -5,12 +5,16 @@ import { TbFidgetSpinner } from "react-icons/tb"
 import { FcGoogle } from "react-icons/fc"
 import useAuth from "../../hooks/useAuth"
 import axios from "axios"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
+import { useState } from "react"
+
 
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading, user, setLoading, resetPassword } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
+  const [showPassword, setShowPassword] = useState(false);
 
   const from = location.state?.from?.pathname || "/";
 
@@ -18,7 +22,7 @@ const Login = () => {
   if (user) return <Navigate to={from} replace={true} />
 
 
-  
+
   // form submit handler
   const handleSubmit = async event => {
     event.preventDefault();
@@ -27,9 +31,9 @@ const Login = () => {
     const password = form.password.value;
 
     try {
-      
+
       const loggedUser = await signIn(email, password);
-   
+
 
       // ✅ Always get fresh token
       const token = await loggedUser.user.getIdToken(true);
@@ -38,14 +42,14 @@ const Login = () => {
       localStorage.setItem("access-token", token);
       localStorage.setItem("user-email", loggedUser.user.email);
 
-       await axios.post("http://localhost:3000/user", {
+      await axios.post("http://localhost:3000/user", {
         email: loggedUser.user.email,
         name: loggedUser.user.displayName || loggedUser.user.email,
         photo: loggedUser.user.photoURL || "https://i.ibb.co/ZVFsg37/default-avatar.png",
       });
 
 
-       const roleRes = await axios.get("http://localhost:3000/user/role", {
+      const roleRes = await axios.get("http://localhost:3000/user/role", {
         headers: { authorization: `Bearer ${token}` },
       });
 
@@ -57,7 +61,7 @@ const Login = () => {
 
 
 
-    
+
       toast.success("Login Successful");
     } catch (err) {
       console.log(err);
@@ -66,18 +70,18 @@ const Login = () => {
   };
 
 
-  
+
   // Handle Google Signin
   const handleGoogleSignIn = async () => {
 
     try {
-     
+
 
       const loggedUser = await signInWithGoogle();
-      
-   const token = await loggedUser.user.getIdToken(true);
-    localStorage.setItem("access-token", token);
- localStorage.setItem("user-email", loggedUser.user.email);
+
+      const token = await loggedUser.user.getIdToken(true);
+      localStorage.setItem("access-token", token);
+      localStorage.setItem("user-email", loggedUser.user.email);
 
       await axios.post("http://localhost:3000/user", {
         email: loggedUser.user.email,
@@ -85,29 +89,29 @@ const Login = () => {
         photo: loggedUser.user.photoURL,
       });
 
-      
+
 
       // const token = await loggedUser.user.getIdToken(true);
       // localStorage.setItem("access-token", token);
       // localStorage.setItem("user-email", loggedUser.user.email);
 
-     // Fetch role
-    const roleRes = await axios.get("http://localhost:3000/user/role", {
-      headers: { authorization: `Bearer ${token}` },
-    });
-    const role = roleRes.data.role;
+      // Fetch role
+      const roleRes = await axios.get("http://localhost:3000/user/role", {
+        headers: { authorization: `Bearer ${token}` },
+      });
+      const role = roleRes.data.role;
 
-    if (role === "admin") navigate("/dashboard/admin/profile");
-    else if (role === "vendor") navigate("/dashboard/vendor/profile");
-    else navigate("/dashboard/user/profile");
+      if (role === "admin") navigate("/dashboard/admin/profile");
+      else if (role === "vendor") navigate("/dashboard/vendor/profile");
+      else navigate("/dashboard/user/profile");
 
-    toast.success("Login Successful");
-  } catch (err) {
-    console.log(err);
+      toast.success("Login Successful");
+    } catch (err) {
+      console.log(err);
 
-    toast.error(err?.message);
-  }
-};
+      toast.error(err?.message);
+    }
+  };
 
 
   return (
@@ -140,14 +144,9 @@ const Login = () => {
                 data-temp-mail-org='0'
               />
             </div>
-            <div>
-              <div className='flex justify-between'>
-                <label htmlFor='password' className='text-sm mb-2'>
-                  Password
-                </label>
-              </div>
+            <div className='relative'>
               <input
-                type='password'
+                type={showPassword ? "text" : "password"}
                 name='password'
                 autoComplete='current-password'
                 id='password'
@@ -155,7 +154,14 @@ const Login = () => {
                 placeholder='*******'
                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900'
               />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className='absolute right-3 top-2 cursor-pointer text-gray-600'
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </div>
+
           </div>
 
           <div>
