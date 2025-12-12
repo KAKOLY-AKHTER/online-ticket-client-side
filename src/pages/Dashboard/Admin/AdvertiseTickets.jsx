@@ -33,8 +33,7 @@ export default function AdvertiseTickets() {
       await authFetch(`${import.meta.env.VITE_API_URL}/admin/tickets/${id}/advertise`, token, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-
-        body: JSON.stringify({ advertise })
+ body: JSON.stringify({ approve: true })
       });
       load();
     } catch (err) {

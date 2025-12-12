@@ -20,7 +20,7 @@ const AllTickets = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:3000/tickets")
+    fetch(`${import.meta.env.VITE_API_URL}/tickets`)
       .then((res) => res.json())
       .then((data) => {
        if (Array.isArray(data)) {

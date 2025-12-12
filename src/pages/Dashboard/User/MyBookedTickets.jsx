@@ -16,7 +16,7 @@ const MyBookedTickets = () => {
 
     if (user?.email) {
       const token = localStorage.getItem("access-token");
-      axios.get("http://localhost:3000/bookings", {
+      axios.get(`${import.meta.env.VITE_API_URL}/bookings`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -11,7 +11,7 @@ const Advertisement = () => {
   
 
 useEffect(() => {
-  axios.get("http://localhost:3000/ticket/advertised") 
+  axios.get(`${import.meta.env.VITE_API_URL}/ticket/advertised`) 
     .then(res => setTickets(res.data || []))
     
     .catch(err => console.error(err));

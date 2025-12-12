@@ -10,9 +10,11 @@ export default function ManageTickets() {
   const load = async () => {
     const token = await getToken();
     const data = await authFetch(`${import.meta.env.VITE_API_URL}/admin/tickets`, token);
+     setTickets(data.filter((t) => t.status === "pending"));
+
     // setTickets(data);
     // setTickets(data.filter(t => t.status === "pending"));
-    setTickets(data.filter(t => t.status === "approved"));
+    // setTickets(data.filter(t => t.status === "approved"));
     // setTickets(data.filter(t => t.status?.toLowerCase() === "pending"));
 
 
@@ -32,7 +34,7 @@ export default function ManageTickets() {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ approve }),
+       body: JSON.stringify({ approve: true })
       });
       console.log("Response:", res);
 

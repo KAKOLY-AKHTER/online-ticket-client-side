@@ -96,7 +96,7 @@ const Login = () => {
       // localStorage.setItem("user-email", loggedUser.user.email);
 
       // Fetch role
-      const roleRes = await axios.get("http://localhost:3000/user/role", {
+      const roleRes = await axios.get("VITE_API_URL/user/role", {
         headers: { authorization: `Bearer ${token}` },
       });
       const role = roleRes.data.role;

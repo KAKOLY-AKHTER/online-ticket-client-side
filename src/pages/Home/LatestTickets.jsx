@@ -11,7 +11,7 @@ const LatestTickets = () => {
   
 
 useEffect(() => {
-  axios.get("http://localhost:3000/ticket/latest")
+  axios.get(`${import.meta.env.VITE_API_URL}/ticket/latest`)
     .then(res => {
       console.log(res.data); 
       setTickets(res.data || []);
