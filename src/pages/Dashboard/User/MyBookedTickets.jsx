@@ -11,26 +11,58 @@ const MyBookedTickets = () => {
   const { user } = useAuth();
   const [tickets, setTickets] = useState([]);
 
+  // useEffect(() => {
+
+
+  //   if (user?.email) {
+  //     const token = localStorage.getItem("access-token");
+  //     axios.get(`${import.meta.env.VITE_API_URL}/bookings`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     })
+  //       .then((res) => {
+  //         setTickets(res.data || []);
+  //       })
+  //       .catch((err) => {
+  //         console.error("Error fetching bookings:", err);
+  //         setTickets([]);
+  //       });
+
+  //   }
+  // }, [user]);
+
   useEffect(() => {
-
-
+  const fetchWithTicketInfo = async () => {
     if (user?.email) {
       const token = localStorage.getItem("access-token");
-      axios.get(`${import.meta.env.VITE_API_URL}/bookings`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-        .then((res) => {
-          setTickets(res.data || []);
-        })
-        .catch((err) => {
-          console.error("Error fetching bookings:", err);
-          setTickets([]);
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/bookings`, {
+          headers: { Authorization: `Bearer ${token}` }
         });
 
+        const bookings = res.data || [];
+
+        // fetch ticket info for each booking
+        const enriched = await Promise.all(bookings.map(async (b) => {
+          const ticketRes = await axios.get(`${import.meta.env.VITE_API_URL}/tickets/${b.ticketId}`);
+          return {
+            ...b,
+            ticketInfo: ticketRes.data
+          };
+        }));
+
+        setTickets(enriched);
+      } catch (err) {
+        console.error("Error fetching bookings:", err);
+        setTickets([]);
+      }
     }
-  }, [user]);
+  };
+
+  fetchWithTicketInfo();
+}, [user]);
+
 
 
   const getCountdown = (date, time) => {
@@ -74,9 +106,17 @@ const MyBookedTickets = () => {
               {item.from} → {item.to}
             </p>
 
-            <p className="mt-2 font-semibold">
+            {/* <p className="mt-2 font-semibold">
               Quantity: {item.quantity}
-            </p>
+            </p> */}
+  <p className="mt-2 font-semibold">
+          Quantity: {item.quantity}
+          <span className="text-sm text-gray-500 ml-2">
+            Left: {item.ticketInfo?.quantity ?? "?"}
+          </span>
+        </p>
+
+
 
             <p className="font-bold text-indigo-600">
               Total: ${item.totalPrice}

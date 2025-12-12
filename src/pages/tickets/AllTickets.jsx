@@ -23,7 +23,7 @@ const AllTickets = () => {
     fetch(`${import.meta.env.VITE_API_URL}/tickets`)
       .then((res) => res.json())
       .then((data) => {
-       if (Array.isArray(data)) {
+        if (Array.isArray(data)) {
           setTickets(data);
         } else {
           console.warn("Invalid ticket data:", data);
@@ -41,7 +41,7 @@ const AllTickets = () => {
   }, []);
 
   const filtered = useMemo(() => {
- let arr = Array.isArray(tickets) ? [...tickets] : [];
+    let arr = Array.isArray(tickets) ? [...tickets] : [];
 
 
     if (searchFrom.trim()) {
@@ -57,7 +57,7 @@ const AllTickets = () => {
     }
 
     console.log(transportFilter);
-    
+
     if (transportFilter !== "All") {
       arr = arr.filter((t) => t.transportType === transportFilter);
     }
@@ -127,7 +127,10 @@ const AllTickets = () => {
             <p className="text-sm text-gray-600">{t.from} → {t.to}</p>
             <p className="text-sm">Transport: {t.transportType}</p>
             <p className="font-bold mt-2">৳{t.price}</p>
-            <p className="text-sm text-gray-600">Available: {t.quantity}</p>
+            <p className="text-sm text-gray-600">
+  Available: { t.quantity}
+</p>
+
 
             <div className="flex flex-wrap gap-2 mt-2">
               {t.perks?.map((p, idx) => (
