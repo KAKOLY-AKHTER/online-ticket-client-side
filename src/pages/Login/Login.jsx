@@ -42,14 +42,14 @@ const Login = () => {
       localStorage.setItem("access-token", token);
       localStorage.setItem("user-email", loggedUser.user.email);
 
-      await axios.post("http://localhost:3000/user", {
+      await axios.post("https://online-ticket-booking-azure.vercel.app/user", {
         email: loggedUser.user.email,
         name: loggedUser.user.displayName || loggedUser.user.email,
         photo: loggedUser.user.photoURL || "https://i.ibb.co/ZVFsg37/default-avatar.png",
       });
 
 
-      const roleRes = await axios.get("http://localhost:3000/user/role", {
+      const roleRes = await axios.get("https://online-ticket-booking-azure.vercel.app/user/role", {
         headers: { authorization: `Bearer ${token}` },
       });
 
@@ -83,7 +83,7 @@ const Login = () => {
       localStorage.setItem("access-token", token);
       localStorage.setItem("user-email", loggedUser.user.email);
 
-      await axios.post("http://localhost:3000/user", {
+      await axios.post("https://online-ticket-booking-azure.vercel.app/user", {
         email: loggedUser.user.email,
         name: loggedUser.user.displayName,
         photo: loggedUser.user.photoURL,

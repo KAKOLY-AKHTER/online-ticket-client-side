@@ -18,7 +18,7 @@ const TicketDetails = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:3000/tickets/${id}`)
+    fetch(`https://online-ticket-booking-azure.vercel.app/tickets/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setTicket(data);
