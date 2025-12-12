@@ -35,7 +35,7 @@ const MyBookedTickets = () => {
 
   const getCountdown = (date, time) => {
     const now = new Date().getTime();
-    const event = new Date(`${date}T${time}:00`).getTime();
+    const event = new Date(`${date}T${time}:00Z`).getTime();
 
     const diff = event - now;
     if (diff <= 0) return "Expired";
@@ -85,42 +85,53 @@ const MyBookedTickets = () => {
             <p className="mt-1">Departure: {item.departureDate} {item.departureTime}</p>
 
 
-            {/* STATUS */}
-            <span
-              className={`inline-block px-4 py-1 rounded mt-2 text-white
-              ${item.status === "pending"
-                  ? "bg-pink-500"
-                  : item.status === "accepted"
-                    ? "bg-blue-500"
-                    : item.status === "paid"
+ 
+
+                          {/* STATUS BADGE */}
+              <span
+                className={`inline-block px-4 py-1 rounded mt-2 text-white
+                  ${
+                    expired
+                      ? "bg-gray-500"
+                      : item.status === "pending"
+                      ? "bg-pink-500"
+                      : item.status === "accepted"
+                      ? "bg-blue-500"
+                      : item.status === "paid"
                       ? "bg-green-600"
                       : "bg-red-600"
-                }`}
-            >
-              {item.status}
-            </span>
-
-            {/* COUNTDOWN */}
-            {item.status !== "rejected" && (
-              <p className="mt-2 text-orange-500 font-semibold">
-                Countdown: {countdown}
-              </p>
-            )}
-
-            {/* PAY BUTTON */}
-            {item.status === "accepted" && !expired && (
-              <Link to={`/dashboard/payment/${item._id}`} className="btn btn-primary w-full mt-3">
-                Pay Now
-              </Link>
+                  }`}
+              >
+                {expired ? "Payment Closed" : item.status}
+              </span>
 
 
-            )}
+             {/* COUNTDOWN */}
+              {item.status !== "rejected" && (
+                <p className="mt-2 text-orange-500 font-semibold">
+                  Countdown: {countdown}
+                </p>
+              )}
 
-            {item.status === "accepted" && expired && (
-              <button className="btn w-full mt-3 bg-gray-400 cursor-not-allowed">
-                Payment Closed
-              </button>
-            )}
+
+                  {/* PAY BUTTON */}
+
+             {item.status === "accepted" && (
+  expired ? (
+    <button className="btn w-full mt-3 bg-gray-400 cursor-not-allowed">
+      Payment Closed
+    </button>
+  ) : (
+    <Link
+      to={`/dashboard/payment/${item._id}`}
+      className="btn btn-primary w-full mt-3"
+    >
+      Pay Now
+    </Link>
+  )
+)}
+
+
           </div>
         );
       })}
