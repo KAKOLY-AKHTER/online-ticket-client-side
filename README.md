@@ -5,10 +5,10 @@ This is the **frontend** of the Online Ticket Booking Platform.
 It provides a user-friendly dashboard for **users, vendors, and admins** to manage tickets, bookings, and payments.
 
 ## 🌐 Live URL
-[https://your-frontend-live-url.com](https://your-frontend-live-url.com)
+[https://teal-macaron-25515f.netlify.app]
 
 ## 🚀 Key Features
-- 🔐 **Authentication** (Login/Signup with JWT)
+- 🔐 **Authentication** (Login/SignUp with JWT)
 - 🎫 **Ticket Browsing & Booking**
 - 💳 **Stripe Payment Integration**
 - 📊 **User Dashboard** (Profile, My Booked Tickets, Transaction History)
