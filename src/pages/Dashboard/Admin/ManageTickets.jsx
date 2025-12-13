@@ -12,12 +12,6 @@ export default function ManageTickets() {
     const data = await authFetch(`${import.meta.env.VITE_API_URL}/admin/tickets`, token);
     setTickets(data.filter((t) => t.status === "pending"));
 
-    // setTickets(data);
-    // setTickets(data.filter(t => t.status === "pending"));
-    // setTickets(data.filter(t => t.status === "approved"));
-    // setTickets(data.filter(t => t.status?.toLowerCase() === "pending"));
-
-
 
     console.log(data);
 

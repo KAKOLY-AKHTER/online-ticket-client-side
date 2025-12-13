@@ -17,7 +17,7 @@ import RequestedBookings from "../pages/Dashboard/Vendor/RequestedBookings";
 import RevenueOverview from "../pages/Dashboard/Vendor/RevenueOverview";
 import AdminProfile from "../pages/Dashboard/Admin/AdminProfile";
 import ManageTickets from "../pages/Dashboard/Admin/ManageTickets";
-import AdvertiseTickets from "../pages/Home/Advertisement";
+
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import Contact from "../pages/static/Contact";
 import About from "../pages/static/About";
@@ -30,6 +30,7 @@ import VendorRoute from "./VendorRoute";
 import UpdateTicket from "../pages/Dashboard/Vendor/Update/UpdateTickets";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import AdvertiseTickets from "../pages/Dashboard/Admin/AdvertiseTickets";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
@@ -179,7 +180,7 @@ export const router = createBrowserRouter([
         path: "admin/advertise-tickets",
         element: (
           <AdminRoute>
-            <AdvertiseTickets />
+           <AdvertiseTickets></AdvertiseTickets>
           </AdminRoute>
         ),
       },
