@@ -42,7 +42,7 @@ const AllTickets = () => {
 
   const filtered = useMemo(() => {
     let arr = Array.isArray(tickets) ? [...tickets] : [];
-
+  arr = arr.filter(t => t.status === "approved");
 
     if (searchFrom.trim()) {
       arr = arr.filter((t) =>

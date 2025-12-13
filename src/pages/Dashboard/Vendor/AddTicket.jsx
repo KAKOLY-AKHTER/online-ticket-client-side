@@ -1,6 +1,3 @@
-// import React, { useState } from "react";
-// import useAuth from "../../../hooks/useAuth";
-// import { authFetch } from "../../../utils/api";
 
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
@@ -28,7 +25,8 @@ const navigate = useNavigate();
       perks: Array.from(form.querySelectorAll('input[name="perks"]:checked')).map(n=>n.value),
       image: form.image.value,
       vendorName: user?.displayName || user?.email,
-      vendorEmail: user?.email
+      vendorEmail: user?.email,
+       status: "pending" 
     };
 
     try {

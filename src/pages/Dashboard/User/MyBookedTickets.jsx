@@ -111,7 +111,7 @@ const MyBookedTickets = () => {
             </p> */}
   <p className="mt-2 font-semibold">
           Quantity: {item.quantity}
-          <span className="text-sm text-gray-500 ml-2">
+          <span className="text-sm text-sky-500 ml-2">
             Left: {item.ticketInfo?.quantity ?? "?"}
           </span>
         </p>

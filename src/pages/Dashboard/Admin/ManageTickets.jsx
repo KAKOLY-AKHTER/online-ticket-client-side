@@ -10,7 +10,7 @@ export default function ManageTickets() {
   const load = async () => {
     const token = await getToken();
     const data = await authFetch(`${import.meta.env.VITE_API_URL}/admin/tickets`, token);
-     setTickets(data.filter((t) => t.status === "pending"));
+    setTickets(data.filter((t) => t.status === "pending"));
 
     // setTickets(data);
     // setTickets(data.filter(t => t.status === "pending"));
@@ -25,27 +25,25 @@ export default function ManageTickets() {
   };
   useEffect(() => { load(); }, []);
 
-  const setApprove = async (id, approve) => {
+  const updateStatus = async (id, status) => {
     try {
       const token = await getToken();
-      const res = await authFetch(`${import.meta.env.VITE_API_URL}/admin/tickets/${id}/approve`, token, {
-        method: 'PATCH',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-       body: JSON.stringify({ approve: true })
-      });
-      console.log("Response:", res);
-
-      alert(res.message || "Updated!");
+      const res = await authFetch(
+        `${import.meta.env.VITE_API_URL}/admin/tickets/${id}`,
+        token,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status })
+        }
+      );
+      alert("Status updated");
       load();
     } catch (err) {
-      console.error("Approve error:", err);
-      alert("Failed to update ticket status");
+      console.error(err);
+      alert("Failed");
     }
   };
-
 
   return (
     <div>
@@ -71,10 +69,10 @@ export default function ManageTickets() {
               <td className="px-4 py-2">
                 <span
                   className={`px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1 ${t.status === "approved"
-                      ? "bg-green-100 text-green-700"
-                      : t.status === "rejected"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-yellow-100 text-yellow-700"
+                    ? "bg-green-100 text-green-700"
+                    : t.status === "rejected"
+                      ? "bg-red-100 text-red-700"
+                      : "bg-yellow-100 text-yellow-700"
                     }`}
                 >
                   {t.status === "approved" && "✔ Approved"}
@@ -85,14 +83,15 @@ export default function ManageTickets() {
               </td>
               <td className="px-4 py-2 flex gap-2 justify-center">
                 <button
-                  className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                  onClick={() => setApprove(t._id, true)}
+                  className="px-3 py-1 bg-green-600 text-white rounded"
+                  onClick={() => updateStatus(t._id, "approved")}
                 >
                   ✔ Approve
                 </button>
+
                 <button
-                  className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
-                  onClick={() => setApprove(t._id, false)}
+                  className="px-3 py-1 bg-red-600 text-white rounded"
+                  onClick={() => updateStatus(t._id, "rejected")}
                 >
                   ✘ Reject
                 </button>

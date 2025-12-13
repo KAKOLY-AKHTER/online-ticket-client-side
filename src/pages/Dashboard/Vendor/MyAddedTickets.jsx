@@ -9,7 +9,7 @@ export default function MyAddedTickets() {
   const { user, getToken } = useAuth();
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const load = async () => {
     try {
@@ -40,7 +40,7 @@ const navigate = useNavigate();
 
       <div className="grid md:grid-cols-3 gap-6">
         {tickets.map((t) => {
-          const isDisabled = t.approved || t.rejected;
+          const isDisabled = t.status === "rejected";
           return (
             <div
               key={t._id}
@@ -55,21 +55,21 @@ const navigate = useNavigate();
                 <p className="text-sm mt-2">
                   Status:{" "}
                   <span
-                    className={`font-semibold ${t.rejected
+                    className={`font-semibold ${t.status === "rejected"
                         ? "text-red-600"
-                        : t.approved
+                        : t.status === "approved"
                           ? "text-green-600"
                           : "text-yellow-600"
                       }`}
                   >
-                    {t.rejected ? "Rejected" : t.approved ? "Approved" : "Pending"}
+                    {t.status}
                   </span>
                 </p>
 
                 <div className="flex gap-2 mt-4">
                   <button
                     className="btn btn-secondary btn-sm"
-                    disabled={isDisabled}
+                    disabled={t.status === "rejected"}
                     onClick={() => navigate(`/dashboard/vendor/update-ticket/${t._id}`)}
                   >
                     Update
@@ -77,8 +77,8 @@ const navigate = useNavigate();
 
                   <button
                     className="btn btn-error btn-sm"
+                    disabled={t.status === "rejected"}
                     onClick={() => handleDelete(t._id)}
-                    disabled={isDisabled}
                   >
                     Delete
                   </button>
