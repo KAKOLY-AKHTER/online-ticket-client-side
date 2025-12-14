@@ -52,6 +52,7 @@ export default function ManageUsers() {
           }`}>
             {u.role || 'user'}
           </span>
+          
         </td>
         <td className="px-4 py-2 flex flex-wrap gap-2 justify-center">
           <button

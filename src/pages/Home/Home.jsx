@@ -1,9 +1,9 @@
 
 import Advertisement from "./Advertisement";
 import HeroBanner from "./HeroBanner";
-import LatestTickets from "./Latesttickets";
 
 
+import LatestTickets from "./LatestTickets"
 import PopularRoute from "./PopularRoute";
 import WhyChooseUs from "./WhyChooseUs";
 
