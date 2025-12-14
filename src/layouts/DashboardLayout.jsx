@@ -1,11 +1,13 @@
 import { Outlet } from "react-router";
 import Sidebar from "../components/Dashboard/Sidebar/Sidebar";
 
+
+
 const DashboardLayout = () => {
   return (
     <div className='min-h-screen bg-gray-100 md:flex'>
       {/* Left Side: Sidebar Component */}
-      <div className="w-64 fixed inset-y-0 left-0 text-gray-800 bg-white z-50">
+      <div className="w-64 md:fixed md:inset-y-0 md:left-0 text-gray-800 bg-white z-50">
  <Sidebar></Sidebar>
       </div>
 

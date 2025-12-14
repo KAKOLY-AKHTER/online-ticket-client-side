@@ -5,7 +5,7 @@ import { MdOutlinePayment } from "react-icons/md";
 import { BiHistory } from "react-icons/bi";
 import { FiUsers, FiCheckSquare } from "react-icons/fi";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import useRole from "../../../hooks/UseRole";
 import { Link, NavLink } from "react-router";
@@ -30,6 +30,12 @@ console.log(isRoleLoading);
   const activeClass = ({ isActive }) =>
     isActive ? `${linkClass} bg-gray-300 font-semibold` : linkClass;
 
+
+ useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
+  }, [isOpen]);
+
+
   if (isRoleLoading) {
     return (
       <div className="p-6">
@@ -40,7 +46,7 @@ console.log(isRoleLoading);
 
   return (
     <>
-      {/* ======= Mobile Top Bar ======= */}
+         {/* Mobile Top Bar   */}
       <div className="bg-gray-100 text-gray-800 flex justify-between md:hidden shadow">
         <div className="p-3">
           <Link to="/">
