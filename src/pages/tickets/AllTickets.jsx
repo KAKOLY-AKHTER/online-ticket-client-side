@@ -98,7 +98,7 @@ const AllTickets = () => {
         <select
           value={transportFilter}
           onChange={(e) => setTransportFilter(e.target.value)}
-          className="px-3 py-2 border rounded"
+          className="px-3 py-2 border text-gray-500 rounded"
         >
           <option value="All">All Transports</option>
           <option value="Bus">Bus</option>
@@ -110,7 +110,7 @@ const AllTickets = () => {
         <select
           value={sortPrice}
           onChange={(e) => setSortPrice(e.target.value)}
-          className="px-3 py-2 border rounded"
+          className="px-3 text-gray-600 py-2 border rounded"
         >
           <option value="none">Sort by Price</option>
           <option value="asc">Price: Low to High</option>
@@ -123,10 +123,10 @@ const AllTickets = () => {
         {pageData.map((t) => (
           <div key={t._id} className="bg-white rounded shadow p-4">
             <img src={t.image} alt={t.title} className="w-full bg-cover h-40 object-cover rounded" />
-            <h3 className="text-lg font-semibold mt-3">{t.title}</h3>
+            <h3 className="text-lg font-semibold mt-3 text-pink-600">{t.title}</h3>
             <p className="text-sm text-gray-600">{t.from} → {t.to}</p>
-            <p className="text-sm">Transport: {t.transportType}</p>
-            <p className="font-bold mt-2">৳{t.price}</p>
+            <p className="text-sm text-sky-700">Transport: {t.transportType}</p>
+            <p className="font-bold mt-2 text-gray-900">৳{t.price}</p>
             <p className="text-sm text-gray-600">
   Available: { t.quantity}
 </p>

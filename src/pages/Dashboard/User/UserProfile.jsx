@@ -6,7 +6,7 @@ export default function UserProfile() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">User Profile</h1>
+      <h1 className="text-2xl font-bold mb-6 text-sky-600">User Profile</h1>
       <ProfileCard user={user} />
     </div>
   );

@@ -15,7 +15,7 @@ const enrichedUser = {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Admin Profile</h1>
+      <h1 className="text-2xl font-bold mb-6 text-sky-600">Admin Profile</h1>
       <ProfileCard user={enrichedUser} />
     </div>
   );

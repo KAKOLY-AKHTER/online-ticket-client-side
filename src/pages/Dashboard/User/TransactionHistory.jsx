@@ -26,10 +26,10 @@ const TransactionHistory = () => {
         <table className="table-auto w-full border-collapse">
           <thead>
             <tr className="bg-gray-100 text-left text-gray-700">
-              <th className="px-4 py-2 border">Transaction ID</th>
-              <th className="px-4 py-2 border">Ticket Title</th>
-              <th className="px-4 py-2 border">Amount</th>
-              <th className="px-4 py-2 border">Date</th>
+              <th className="px-4 py-2 border text-pink-800">Transaction ID</th>
+              <th className="px-4 py-2 border text-gray-900">Ticket Title</th>
+              <th className="px-4 py-2 border text-green-500">Amount</th>
+              <th className="px-4 py-2 border text-fuchsia-700">Date</th>
             </tr>
           </thead>
 
@@ -52,7 +52,7 @@ const TransactionHistory = () => {
                   <td className="px-4 py-2 border font-mono text-sm text-blue-600">
                     {t.transactionId}
                   </td>
-                  <td className="px-4 py-2 border">{t.title}</td>
+                  <td className="px-4 py-2 border text-gray-700">{t.title}</td>
                   <td className="px-4 py-2 border font-semibold text-green-600">
                     ${t.amount}
                   </td>

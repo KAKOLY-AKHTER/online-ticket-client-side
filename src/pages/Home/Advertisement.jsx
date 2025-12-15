@@ -29,10 +29,10 @@ useEffect(() => {
         {tickets.map(t => (
           <div key={t._id} className="bg-white dark:bg-gray-900 shadow rounded-xl p-4 hover:shadow-lg transition">
             <img src={t.image} className="rounded-lg bg-cover h-40 w-full object-cover" />
-            <h3 className="mt-3 text-xl font-semibold">{t.title}</h3>
-            <p className="text-gray-600">{t.transportType}</p>
-            <p className="mt-1">Price: ${t.price}</p>
-            <p className="mt-1">Quantity: {t.quantity}</p>
+            <h3 className="mt-3 text-xl text-pink-600 font-semibold">{t.title}</h3>
+            <p className="text-gray-600 font-bold">{t.transportType}</p>
+            <p className="mt-1 text-sky-400">Price: ${t.price}</p>
+            <p className="mt-1 text-green-700">Quantity: {t.quantity}</p>
             <div className="mt-2 flex flex-wrap gap-2 text-xs">
               {t.perks?.map(p => (
                 <span key={p} className="px-2 py-1 bg-indigo-100 text-indigo-700 rounded">{p}</span>

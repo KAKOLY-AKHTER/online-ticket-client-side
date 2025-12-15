@@ -11,7 +11,7 @@ export default function AdvertiseTickets() {
   const load = async () => {
     const token = await getToken();
     const data = await authFetch(`${import.meta.env.VITE_API_URL}/admin/tickets`, token);
-    // ✅ only approved tickets
+
     console.log(data);
     
     setTickets(data.filter(t => t.status === "approved"));

@@ -49,7 +49,7 @@ const navigate = useNavigate();
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-3xl mx-auto p-6 bg-pink-200 rounded-lg shadow-md">
   <h2 className="text-3xl font-bold mb-6 text-blue-600">Add Ticket</h2>
   <form onSubmit={handleSubmit} className="grid gap-4">
     <input name="title" placeholder="Ticket Title" className="input input-bordered w-full" required />
@@ -77,8 +77,8 @@ const navigate = useNavigate();
     </div>
 
     <div>
-      <label className="block font-semibold mb-2">Perks</label>
-      <div className="flex flex-wrap gap-4">
+      <label className="block text-gray-900 font-semibold mb-2">Perks</label>
+      <div className="flex flex-wrap text-sky-950 gap-4">
         {["AC", "Wifi", "Breakfast", "Snacks", "Water"].map(p => (
           <label key={p} className="flex items-center gap-2">
             <input name="perks" type="checkbox" value={p} className="checkbox" />

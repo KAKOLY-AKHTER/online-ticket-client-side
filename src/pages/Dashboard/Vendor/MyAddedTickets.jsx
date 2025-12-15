@@ -52,7 +52,7 @@ export default function MyAddedTickets() {
                 <p className="text-sm text-gray-600">Price: ${t.price}</p>
                 <p className="text-sm text-gray-600">Quantity: {t.quantity}</p>
 
-                <p className="text-sm mt-2">
+                <p className="text-sm mt-2 text-sky-800">
                   Status:{" "}
                   <span
                     className={`font-semibold ${t.status === "rejected"

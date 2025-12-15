@@ -15,7 +15,7 @@ export default function VendorProfile() {
     };
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Vendor Profile</h1>
+      <h1 className="text-2xl font-bold mb-6 text-sky-600">Vendor Profile</h1>
       <ProfileCard user={enrichedUser} />
     </div>
   );

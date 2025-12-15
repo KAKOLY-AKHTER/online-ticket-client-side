@@ -9,7 +9,7 @@ export default function ProfileCard({ user }) {
           className="w-32 h-32 rounded-full border-4 border-blue-500 object-cover"
         />
 
-        <h2 className="text-2xl font-bold mt-4">
+        <h2 className="text-2xl text-green-600 font-bold mt-4">
           {user?.name || user?.displayName}
         </h2>
         <p className="text-gray-500">{user?.email}</p>

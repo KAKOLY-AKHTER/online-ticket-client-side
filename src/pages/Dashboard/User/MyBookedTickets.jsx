@@ -100,7 +100,7 @@ const MyBookedTickets = () => {
               className="rounded-lg h-40 w-full object-cover"
             />
 
-            <h3 className="mt-3 text-xl font-semibold">{item.title}</h3>
+            <h3 className="mt-3 text-xl font-semibold text-pink-700">{item.title}</h3>
 
             <p className="text-gray-600 dark:text-gray-300">
               {item.from} → {item.to}
@@ -109,7 +109,7 @@ const MyBookedTickets = () => {
             {/* <p className="mt-2 font-semibold">
               Quantity: {item.quantity}
             </p> */}
-  <p className="mt-2 font-semibold">
+  <p className="mt-2 text-green-700 font-semibold">
           Quantity: {item.quantity}
           <span className="text-sm text-sky-500 ml-2">
             Left: {item.ticketInfo?.quantity ?? "?"}
@@ -122,7 +122,7 @@ const MyBookedTickets = () => {
               Total: ${item.totalPrice}
             </p>
 
-            <p className="mt-1">Departure: {item.departureDate} {item.departureTime}</p>
+            <p className="mt-1 text-gray-800">Departure: {item.departureDate} {item.departureTime}</p>
 
 
  

@@ -1,9 +1,10 @@
 
 import Advertisement from "./Advertisement";
 import HeroBanner from "./HeroBanner";
+import LatestTickets from "./Latesttickets";
 
 
-import LatestTickets from "./LatestTickets"
+
 import PopularRoute from "./PopularRoute";
 import WhyChooseUs from "./WhyChooseUs";
 
@@ -16,7 +17,7 @@ const Home = () => {
       <HeroBanner />
      
       <Advertisement></Advertisement>
-     <LatestTickets></LatestTickets>
+    <LatestTickets></LatestTickets>
      <PopularRoute></PopularRoute>
     <WhyChooseUs></WhyChooseUs> 
 
